@@ -70,17 +70,20 @@ def get_vertical_string(hash_table_collection, col):
         response.append(None)
     return response
 
-def get_horizontal_string(hash_table_collection, row):
+def get_horizontal_string_by_index(hash_table_collection, row):
     """
-    Return the list of values fot the requested row number
-    None when hash_table_collection has no value at this row
+    Return the list of values for the requested row number, the first value is the hash
+    None when matrix has no value at this row
     """
     keys = list(hash_table_collection.keys())
     if row > len(keys) - 1: return None
     response = []
-    for col in range(len(keys[row])):
+    # get hash_table_collection first colum (column 0) which is actually hash_table_collection[0]
+    response.append(keys[row])
+    # get matrix columns 1 to n for row "row"
+    for col in range(len(hash_table_collection[keys[row]])):
       try:
-        response.append(hash_table_collection[row][col]) 
+        response.append(hash_table_collection[keys[row]][col]) 
       except IndexError as e:
         # If row has no value at this column set to None
         response.append(None)
