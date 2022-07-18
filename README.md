@@ -7,6 +7,7 @@ Usefull algortims for matrix parsing.
 - get all Hashes keys [hash_1, hash_2, hash_n]
 - get a list of all values and hashes [[hash_1, value_1, value_2, value_n], [hash_n, value_1, value_n]]
 - get a list of all values of a hash table. Output [hash, value_1, value_2, value_n]
+- get a list of all values of a hash table accesing it by it's index number. Output [hash, value_1, value_2, value_n]
 
 
 <details>

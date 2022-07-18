@@ -88,3 +88,22 @@ def get_horizontal_string_by_index(hash_table_collection, row):
         # If row has no value at this column set to None
         response.append(None)
     return response
+
+
+def get_horizontal_string(hash_table_collection, hash):
+    """
+    Return the list of values for the requested has, the first value is the hash
+    None when hash does not exists 
+    """
+    _hashes = list(hash_table_collection.keys())
+    if hash not in _hashes: return None
+
+    response = []
+    # get hash table first colum (column 0) which is actually hash_table_collection[0]
+    # hash_table_collection[1] or hash_table_collection['first'] or hash_table_collection['volvo']
+    response.append(hash)
+    # get hash table collection columns 1 to n for row "hash"
+    for value in hash_table_collection[hash]:
+      response.append(value)
+    
+    return response
