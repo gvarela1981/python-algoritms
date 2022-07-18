@@ -1,4 +1,4 @@
-def make_matrix(relations):
+def make_hash_table_collection(relations):
     """
     Create a 2d matrix (dictionary filled with lists) from key:value lists
     input: list of 2 itmes list
@@ -8,36 +8,36 @@ def make_matrix(relations):
            example 1: {'Carlos':['Luis', 'Jenny'], 'Maria':['Luis']}
            example 2: {1:[2], 2:[3], 4:[3]}
     """
-    matrix = {}
+    hash_table_collection = {}
     for relation in relations:
         row = relation[0]
         col = relation[1]
         try:
-            matrix[row].append(col)
+            hash_table_collection[row].append(col)
         except KeyError as e:
-            matrix.update({row: [col]})
-    return matrix
+            hash_table_collection.update({row: [col]})
+    return hash_table_collection
 
 
-def get_matrix_keys(matrix):
+def get_hash_table_collection_keys(hash_table_collection):
     """ Return al keys from matrix """
-    return list(matrix.keys())
+    return list(hash_table_collection.keys())
 
 
-def get_matrix_single_values_and_keys(matrix):
+def get_hash_table_single_values_and_keys(hash_table_collection):
     """
-    Return a list of all values in matrix, columns and rows
+    Return a list of all values in hash_table_collection, columns and rows
     values are not duplicated
     
-    input: dictionary with 2d matrix
+    input: dictionary with 2d hash_table_collection
     output: list
     """
-    matrix_keys = get_matrix_keys(matrix).copy()
-    matrix_values = matrix_keys.copy()
-    for row in matrix_keys:
-        for value in matrix[row]:
-            if value not in matrix_values: matrix_values.append(value)
-    return matrix_values
+    hash_table_collection_keys = get_hash_table_collection_keys(hash_table_collection).copy()
+    hash_table_collection_values = hash_table_collection_keys.copy()
+    for row in hash_table_collection_keys:
+        for value in hash_table_collection[row]:
+            if value not in hash_table_collection_values: hash_table_collection_values.append(value)
+    return hash_table_collection_values
 
 
 def remove_list_duplicates(listed_values):
@@ -50,3 +50,38 @@ def remove_list_duplicates(listed_values):
         if value not in response_list:
             response_list.append(value)
     return response_list
+
+
+def get_vertical_string(hash_table_collection, col):
+    """
+    Return the list of values fot the requested column number
+    None when hash_table_collection has no value at this column
+    """
+    keys = list(hash_table_collection.keys())
+    if col == 0: return keys
+    response = []
+    for row in keys:
+      try:
+        # First column is actually the index, colum 1 of the row 
+        # becomes first element of the list -- hash_table_collection[row][col -1]
+        response.append(hash_table_collection[row][col - 1]) 
+      except IndexError as e:
+        # If row has no value at this column set to None
+        response.append(None)
+    return response
+
+def get_horizontal_string(hash_table_collection, row):
+    """
+    Return the list of values fot the requested row number
+    None when hash_table_collection has no value at this row
+    """
+    keys = list(hash_table_collection.keys())
+    if row > len(keys) - 1: return None
+    response = []
+    for col in range(len(keys[row])):
+      try:
+        response.append(hash_table_collection[row][col]) 
+      except IndexError as e:
+        # If row has no value at this column set to None
+        response.append(None)
+    return response
