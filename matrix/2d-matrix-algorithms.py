@@ -107,3 +107,37 @@ def get_horizontal_string(hash_table_collection, hash):
       response.append(value)
     
     return response
+
+
+def get_diagonal_string(hash_table_collection, direction='right', start_col=0, start_row=0, length=0):
+  """
+  Returns a list with a sequence of the values on a diagonal axis
+  input:  matrix
+          direction -> axis to iterate (right, left)
+          start_col -> number of column to start the return sequence
+          start_row -> value of the row to to start the return sequence
+          start -> index number of the list to start the sequence to return (default zero)
+          length -> index number ot the list to end the sequence to return (default last)
+  output: a list with the values of the selected diagonal 
+  """
+  keys = list(hash_table_collection.keys())
+  length = length if (isinstance(length, int) and length > 0) else len(keys)
+  start_row_num = keys.index(start_row) if start_row in keys else 0
+  end_row_num = start_row_num + length
+  start_col_num = start_col if isinstance(start_col, int) else 0
+  next_iteration = 1 if direction == 'right' else -1
+  current_col_num = start_col_num # starts at start_col_num and increments during parsing
+  response = []
+  
+  for row in keys[start_row_num:end_row_num]:
+    try:
+      value = hash_table_collection[row][current_col_num - 1] if current_col_num != 0 else row
+      response.append(value)
+    except IndexError as e:
+      response.append(None) # If the hash table has no element at this position return none
+    except Exception as e:
+      print(f"Exception: {e}")
+      pass
+    current_col_num = current_col_num + next_iteration
+
+  return response
