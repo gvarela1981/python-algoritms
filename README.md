@@ -26,3 +26,11 @@ Usefull algortims for matrix parsing.
     People are listed by their names
 </details>
 
+## Queues
+Apply FIFO and LIFO
+
+- Pending
+
+## Search Trees
+
+- Pending
