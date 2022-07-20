@@ -1,3 +1,5 @@
+import matrix_2d_algorithms as matrix
+
 n_case1 = 2
 case1 = "1 2"
 # output 2, there's two people and 2 is the judge
@@ -22,30 +24,7 @@ case5 = "1 3, 2 3, 4 3"
 n = n_case5
 str_relations = case5
 
-trust = [[int(val) for val in pair.split()] for pair in str_relations.strip().split(',')]
-
-def make_matrix(list):
-    """
-    Create a 2d matrix (dictionary filled with lists) from key:value lists
-    input: list of 2 itmes list
-           example: [[1, 2], [2, 3], [4, 3]]
-    output: 2d matrix where index are the first element of every input list
-           example: {1:[2], 2:[3], 4:[3]}
-    """
-    matrix = {}
-    for relation in list:
-        row = relation[0]
-        col = relation[1]
-        try:
-            matrix[row].append(col)
-        except KeyError as e:
-            matrix.update({row: [col]})
-    return matrix
-
-
-def get_matrix_keys(matrix):
-    """ Return al keys from matrix """
-    return list(matrix.keys())
+trust_relations = [[int(val) for val in pair.split()] for pair in str_relations.strip().split(',')]
 
 
 def get_judge(n, trust):
@@ -68,7 +47,7 @@ def get_judge(n, trust):
         when only one person trust no one, return False otherwise 
         """
         judge_candidates = []
-        town_people = get_matrix_keys(trust_matrix)
+        town_people = matrix.get_hash_table_collection_keys(trust_matrix)
         # People will take numbers from 1 to n 
         # town people will trust every town people, so they will have a 
         # key in the matrix and a list of trusted people
@@ -93,12 +72,12 @@ def get_judge(n, trust):
         response = True if town_people_meets_criteria else False
         return response
 
-    trust_matrix = make_matrix(trust)
+    trust_matrix = matrix.make_hash_table_collection(trust)
     judge_candidate = (check_criteria1(trust_matrix))
     # Check if candidate is the judge
-    is_judge = False if judge_candidate is None else check_criteria2(judge_candidate, trust_matrix)
-    response = -1 if is_judge == False else judge_candidate
+    candidate_is_judge = False if judge_candidate is None else check_criteria2(judge_candidate, trust_matrix)
+    response = judge_candidate if candidate_is_judge else -1
     return response
 
 
-print(get_judge(n, trust))
+print(get_judge(n, trust_relations))
